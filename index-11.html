@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Wellness Hub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#fff;--bg2:#f5f5f2;--bg3:#eeede9;--text:#1a1a1a;--text2:#666660;--border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);--r:8px;--rl:12px;--teal:#1D9E75;--teal-l:#E1F5EE;--teal-m:#9FE1CB;--teal-d:#0F6E56;--purple:#7F77DD;--purple-l:#EEEDFE;--purple-d:#3C3489;--amber:#BA7517;--amber-l:#FAEEDA;--amber-d:#633806;--red:#E24B4A;--red-l:#FCEBEB;--red-d:#791F1F;--blue:#378ADD;--blue-l:#E6F1FB;--blue-d:#0C447C;--green:#639922;--green-l:#EAF3DE;--green-d:#27500A;--pink:#D4537E;--pink-l:#FBEAF0;--pink-d:#72243E}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1c1a;--bg2:#252522;--bg3:#2e2e2b;--text:#e8e8e2;--text2:#9a9a94;--border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);--teal-l:#04342C;--teal-d:#9FE1CB;--purple-l:#26215C;--purple-d:#CECBF6;--amber-l:#412402;--amber-d:#FAC775;--red-l:#501313;--red-d:#F7C1C1;--blue-l:#042C53;--blue-d:#B5D4F4;--green-l:#173404;--green-d:#C0DD97;--pink-l:#4B1528;--pink-d:#F4C0D1}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh}
+.app{max-width:700px;margin:0 auto;padding:1rem}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1rem}
+.ct{font-size:16px;font-weight:500;margin-bottom:.75rem}
+.btn{padding:7px 14px;border-radius:var(--r);border:0.5px solid var(--border2);background:transparent;cursor:pointer;font-size:13px;font-weight:500;color:var(--text);font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.btn:hover{background:var(--bg2)}.btn.g{background:var(--green-l);border-color:var(--green);color:var(--green-d)}
+.btn.p{background:var(--purple-l);border-color:var(--purple);color:var(--purple-d)}
+.btn.r{background:var(--red-l);border-color:var(--red);color:var(--red-d)}
+.btn.t{background:var(--teal-l);border-color:var(--teal);color:var(--teal-d)}
+.btn.b{background:var(--blue-l);border-color:var(--blue);color:var(--blue-d)}
+.nt{padding:7px 13px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg);cursor:pointer;font-size:12px;color:var(--text2);font-family:inherit;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+.nt.on{background:var(--bg2);color:var(--text);font-weight:500}
+.sc{display:none}.sc.on{display:block}
+.inp{width:100%;padding:8px 10px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px;margin-bottom:8px}
+.inp:focus{outline:none;border-color:var(--teal)}
+label{font-size:11px;color:var(--text2);display:block;margin-bottom:3px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1rem}
+.stat{background:var(--bg2);border-radius:var(--r);padding:10px;text-align:center}
+.sn{font-size:22px;font-weight:500}.sl{font-size:11px;color:var(--text2);margin-top:2px}
+.row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:13px}
+.row:last-child{border-bottom:none}
+.pb{height:7px;border-radius:4px;background:var(--bg2);overflow:hidden}
+.pbf{height:100%;border-radius:4px;transition:width .4s}
+.mr{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ml{font-size:12px;color:var(--text2);width:58px;flex-shrink:0}
+.mv{font-size:12px;font-weight:500;min-width:38px;text-align:right}
+.fi{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px}
+.fi:last-child{border-bottom:none}
+.wd{width:34px;height:34px;border-radius:50%;border:0.5px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.wd.full{background:var(--blue-l);border-color:var(--blue)}
+.wdots{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.bc{border-radius:var(--r);padding:12px 8px;text-align:center;border:0.5px solid var(--border)}
+.bn{font-size:11px;font-weight:500;margin-top:6px}.bs{font-size:10px;color:var(--text2);margin-top:2px}
+.mb{padding:7px 13px;border-radius:var(--r);border:0.5px solid var(--border2);background:transparent;cursor:pointer;font-size:13px;font-family:inherit;color:var(--text)}
+.mb.sel{font-weight:500;border-width:1.5px}
+.pp{padding:3px 9px;border-radius:20px;font-size:11px;border:0.5px solid transparent;color:var(--text2)}
+.ti-row{display:flex;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--border);align-items:flex-start}
+.ti-row:last-child{border-bottom:none}
+.wkc{aspect-ratio:1;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;border:0.5px solid var(--border);color:var(--text2)}
+.wkc.wd2{border-color:var(--teal-m);color:var(--teal-d);background:var(--teal-l)}
+.wkc.dn{background:var(--teal);border-color:var(--teal-d);color:#fff}
+.wkc.rs{opacity:.3}
+.wkc.td2{border-color:var(--purple);border-width:1.5px}
+.mi{display:flex;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--border);align-items:flex-start}
+.mi:last-child{border-bottom:none}
+.sw{width:32px;height:18px;border-radius:9px;background:var(--teal);border:0.5px solid var(--teal-d);position:relative;transition:background .2s;flex-shrink:0;cursor:pointer}
+.sw.off{background:var(--bg2);border-color:var(--border2)}
+.kn{width:12px;height:12px;border-radius:50%;background:#fff;position:absolute;top:2px;left:16px;transition:left .2s}
+.sw.off .kn{left:2px;background:var(--text2)}
+.prof-btn{flex:1;padding:10px;border-radius:var(--rl);border:0.5px solid var(--border2);background:var(--bg);cursor:pointer;font-family:inherit;text-align:center;transition:all .15s}
+.prof-btn.aw{background:var(--teal-l);border-color:var(--teal);border-width:1.5px}
+.prof-btn.ah{background:var(--blue-l);border-color:var(--blue);border-width:1.5px}
+.vlink{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue-d);background:var(--blue-l);border:0.5px solid #B5D4F4;padding:2px 9px;border-radius:20px;text-decoration:none}
+.qb{background:var(--purple-l);border-left:3px solid var(--purple);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--purple-d);line-height:1.5;border-radius:0 var(--r) var(--r) 0}
+.nav{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+@media(max-width:480px){.app{padding:.75rem}.fg3{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div style="display:flex;gap:8px;margin-bottom:1rem">
+  <button class="prof-btn aw" id="profW" onclick="switchProfile('wife')">
+    <div style="font-size:14px;font-weight:500" id="profWName">Wife</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:2px">Postpartum · 45 min</div>
+  </button>
+  <button class="prof-btn" id="profH" onclick="switchProfile('husband')">
+    <div style="font-size:14px;font-weight:500" id="profHName">Husband</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:2px">Treadmill · 30 min</div>
+  </button>
+</div>
+
+<div class="card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:1rem">
+  <div>
+    <div style="font-size:20px;font-weight:500" id="hdrTitle">Wellness Hub</div>
+    <div style="font-size:12px;color:var(--text2);margin-top:2px" id="hdrSub">Mon · Tue · Wed · Thu</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);cursor:pointer" onclick="toggleSound()">
+      <div class="sw" id="soundSw"><div class="kn"></div></div>
+      <span id="soundLbl">Sound on</span>
+    </div>
+    <button class="btn p" id="setupBtn" onclick="showSetup()"><i class="ti ti-settings"></i> Setup</button>
+  </div>
+</div>
+
+<div id="quoteBox" class="qb"></div>
+<div id="musicBtn"></div>
+<div class="nav" id="mainNav"></div>
+
+<!-- WIFE SCREENS -->
+<div id="wife-screens">
+
+<div id="wsc-workout" class="sc on">
+  <div class="card" style="text-align:center">
+    <div style="font-size:15px;font-weight:500;margin-bottom:3px" id="wPhTitle">Ready to start</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem" id="wPhSub">45 min · 5 phases</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:.75rem;flex-wrap:wrap" id="wPills"></div>
+    <div style="position:relative;width:160px;height:160px;margin:0 auto .75rem">
+      <svg width="160" height="160" viewBox="0 0 160 160" style="transform:rotate(-90deg)">
+        <circle cx="80" cy="80" r="70" fill="none" stroke="var(--bg2)" stroke-width="9"/>
+        <circle id="wArc" cx="80" cy="80" r="70" fill="none" stroke="var(--teal)" stroke-width="9" stroke-dasharray="439.8" stroke-dashoffset="0" stroke-linecap="round"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:120px">
+        <div style="font-size:32px;font-weight:500;line-height:1" id="wDisp">10:00</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:3px" id="wLbl">ready</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:3px" id="wRep"></div>
+      </div>
+    </div>
+    <div class="pb" style="margin-bottom:.75rem"><div class="pbf" id="wFill" style="width:100%;background:var(--teal)"></div></div>
+    <div id="wExCard" style="display:none;background:var(--bg2);border-radius:var(--r);padding:10px;margin-bottom:.75rem">
+      <div style="font-size:14px;font-weight:500;margin-bottom:4px" id="wExName"></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:6px" id="wExCue"></div>
+      <a id="wExVid" href="#" target="_blank" class="vlink"><i class="ti ti-brand-youtube" style="font-size:11px"></i> Watch demo</a>
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem" id="wNxt"></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button class="btn" id="wBBack" onclick="wPrevPh()" style="display:none"><i class="ti ti-arrow-left"></i></button>
+      <button class="btn t" id="wBPlay" onclick="wTogTimer()" style="font-size:14px;padding:9px 20px"><i class="ti ti-player-play"></i> Start</button>
+      <button class="btn" id="wBSkip" onclick="wNextPh()" style="display:none"><i class="ti ti-arrow-right"></i></button>
+    </div>
+    <div id="wMoodSec" style="display:none;margin-top:.75rem">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px">How do you feel?</div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+        <button class="mb" onclick="wSelMood('great',this)" style="background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d)">Great</button>
+        <button class="mb" onclick="wSelMood('good',this)" style="background:var(--green-l);border-color:var(--green);color:var(--green-d)">Good</button>
+        <button class="mb" onclick="wSelMood('ok',this)" style="background:var(--amber-l);border-color:var(--amber);color:var(--amber-d)">Ok</button>
+        <button class="mb" onclick="wSelMood('tired',this)" style="background:var(--red-l);border-color:var(--red);color:var(--red-d)">Tired</button>
+        <button class="mb" onclick="wSelMood('strong',this)" style="background:var(--purple-l);border-color:var(--purple);color:var(--purple-d)">Strong</button>
+      </div>
+    </div>
+    <div id="wRpeSec" style="display:none;margin-top:.75rem">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px">Effort (RPE 1–10)</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap" id="wRpeBtns"></div>
+    </div>
+    <button class="btn g" id="wBFinish" onclick="wLogWorkout()" style="display:none;width:100%;justify-content:center;margin-top:.75rem"><i class="ti ti-check"></i> Log workout</button>
+  </div>
+  <div class="card"><div class="ct">Today's exercises</div><div id="wExList"></div></div>
+</div>
+
+<div id="wsc-nutrition" class="sc">
+  <div class="card">
+    <div class="ct">Today's calories</div>
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+      <div style="position:relative;width:130px;height:130px;flex-shrink:0">
+        <svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="55" fill="none" stroke="var(--bg2)" stroke-width="8"/><circle id="wCalArc" cx="65" cy="65" r="55" fill="none" stroke="var(--teal)" stroke-width="8" stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:65px 65px"/></svg>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center"><div style="font-size:20px;font-weight:500" id="wCalEat">0</div><div style="font-size:10px;color:var(--text2)">eaten</div></div>
+      </div>
+      <div style="flex:1;min-width:160px">
+        <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:.75rem">
+          <div class="stat"><div class="sn" id="wCalGoal">1800</div><div class="sl">goal</div></div>
+          <div class="stat"><div class="sn" id="wCalBurn">0</div><div class="sl">burned</div></div>
+          <div class="stat"><div class="sn" id="wCalRem">1800</div><div class="sl">remaining</div></div>
+        </div>
+        <div class="mr"><div class="ml">Protein</div><div class="pb" style="flex:1"><div class="pbf" id="wPProt" style="width:0%;background:var(--purple)"></div></div><div class="mv" id="wVProt">0g</div></div>
+        <div class="mr"><div class="ml">Carbs</div><div class="pb" style="flex:1"><div class="pbf" id="wPCarb" style="width:0%;background:var(--amber)"></div></div><div class="mv" id="wVCarb">0g</div></div>
+        <div class="mr"><div class="ml">Fat</div><div class="pb" style="flex:1"><div class="pbf" id="wPFat" style="width:0%;background:var(--red)"></div></div><div class="mv" id="wVFat">0g</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Log food</div>
+    <input class="inp" id="wFoodSearch" placeholder="Search — e.g. jollof, fufu, egg, chicken..." oninput="renderFoodDB('w')">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="wCatBtns"></div>
+    <div id="wFoodList" style="max-height:300px;overflow-y:auto;border:0.5px solid var(--border);border-radius:var(--r)"></div>
+  </div>
+  <div class="card"><div class="ct">Today's food log</div><div id="wFoodLog"><div style="font-size:13px;color:var(--text2)">Nothing logged yet.</div></div></div>
+  <div class="card">
+    <div class="ct">Water intake</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:4px">Tap to log — aim 8/day (more if breastfeeding)</div>
+    <div class="wdots" id="wWater"></div>
+    <div style="font-size:13px;margin-top:4px"><span id="wWaterN" style="font-weight:500">0</span> <span style="color:var(--text2)">/ 8 glasses today</span></div>
+  </div>
+</div>
+
+<div id="wsc-body" class="sc">
+  <div class="card">
+    <div class="ct">Log measurements</div>
+    <div class="fg3"><div><label>Weight (kg)</label><input class="inp" id="wBWt" type="number" step="0.1" placeholder="68.5"></div><div><label>Waist (cm)</label><input class="inp" id="wBWa" type="number" placeholder="82"></div><div><label>Hips (cm)</label><input class="inp" id="wBHi" type="number" placeholder="96"></div></div>
+    <div class="fg3"><div><label>Chest (cm)</label><input class="inp" id="wBCh" type="number" placeholder="90"></div><div><label>Thigh (cm)</label><input class="inp" id="wBTh" type="number" placeholder="60"></div><div><label>Arms (cm)</label><input class="inp" id="wBAr" type="number" placeholder="30"></div></div>
+    <button class="btn g" onclick="wLogBody()"><i class="ti ti-check"></i> Save</button>
+  </div>
+  <div class="card"><div class="ct">Weight chart</div><div style="height:190px"><canvas id="wWtChart"></canvas></div></div>
+  <div class="card"><div class="ct">Measurements log</div><div id="wBodyLog"><div style="font-size:13px;color:var(--text2)">None yet.</div></div></div>
+  <div class="card">
+    <div class="ct">BMI calculator</div>
+    <div class="fg"><div><label>Height (cm)</label><input class="inp" id="wBMIh" type="number" placeholder="165" oninput="wCalcBMI()"></div><div><label>Weight (kg)</label><input class="inp" id="wBMIw" type="number" step="0.1" placeholder="68" oninput="wCalcBMI()"></div></div>
+    <div id="wBMIres" style="font-size:14px;color:var(--text2)">Enter height and weight</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:6px">Note: BMI is a guide only, especially postpartum.</div>
+  </div>
+</div>
+
+<div id="wsc-progress" class="sc">
+  <div class="stat-grid"><div class="stat"><div class="sn" id="wStW">0</div><div class="sl">workouts</div></div><div class="stat"><div class="sn" id="wStWk">0</div><div class="sl">this week</div></div><div class="stat"><div class="sn" id="wStSt">0</div><div class="sl">streak</div></div><div class="stat"><div class="sn" id="wStMin">0</div><div class="sl">minutes</div></div></div>
+  <div class="card"><div class="ct">This month</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px" id="wCalGrid"></div></div>
+  <div class="card"><div class="ct">Effort over time (RPE)</div><div style="height:130px"><canvas id="wRpeChart"></canvas></div></div>
+  <div class="card">
+    <div class="ct">Strength log</div>
+    <div class="fg"><div><label>Exercise</label><select class="inp" id="wStrEx"><option>Goblet squat</option><option>Romanian deadlift</option><option>Shoulder press</option><option>Bent-over row</option><option>Reverse lunge</option><option>Glute bridge</option></select></div><div><label>Weight (kg)</label><input class="inp" id="wStrWt" type="number" step="0.5" placeholder="8"></div></div>
+    <button class="btn p" onclick="wLogStr()" style="margin-bottom:1rem"><i class="ti ti-plus"></i> Log lift</button>
+    <div style="height:130px"><canvas id="wStrChart"></canvas></div>
+  </div>
+  <div class="card"><div class="ct">Weekly summary</div><div id="wWeekSum"></div></div>
+  <div class="card"><div class="ct">Workout log</div><div id="wWkLog"><div style="font-size:13px;color:var(--text2)">No workouts yet.</div></div></div>
+  <button class="btn r" onclick="wClearAll()" style="margin-top:.25rem"><i class="ti ti-trash"></i> Reset my data</button>
+</div>
+
+<div id="wsc-baby" class="sc">
+  <div class="card">
+    <div class="ct">Baby milestone tracker</div>
+    <div class="fg"><div><label>Milestone</label><input class="inp" id="wMsText" placeholder="e.g. First smile"></div><div><label>Baby age (weeks)</label><input class="inp" id="wMsAge" type="number" placeholder="6"></div></div>
+    <button class="btn g" onclick="wAddMs()"><i class="ti ti-plus"></i> Add milestone</button>
+  </div>
+  <div class="card"><div class="ct">Milestones logged</div><div id="wMsList"><div style="font-size:13px;color:var(--text2)">None yet.</div></div></div>
+  <div class="card"><div class="ct">Milestones to watch for</div><div id="wBabyGuide"></div></div>
+</div>
+
+<div id="wsc-rest" class="sc">
+  <div class="card"><div class="ct">Rest day recovery</div><div style="font-size:12px;color:var(--text2);margin-bottom:.75rem">Fri · Sat · Sun</div><div id="wRestList"></div></div>
+  <div class="card"><div class="ct">Daily pelvic floor practice</div><div id="wPFList"></div></div>
+</div>
+
+<div id="wsc-badges" class="sc">
+  <div class="card"><div class="ct">Achievements</div><div style="font-size:12px;color:var(--text2);margin-bottom:.75rem">Unlock automatically as you hit milestones</div><div class="bg-grid" id="wBadges"></div></div>
+</div>
+
+<div id="wsc-setup" class="sc">
+  <button class="btn" onclick="closeSetup()" style="margin-bottom:1rem"><i class="ti ti-arrow-left"></i> Back</button>
+  <div class="card">
+    <div class="ct">Profile &amp; goals</div>
+    <label>Your name</label><input class="inp" id="wSetName" placeholder="e.g. Sarah">
+    <label>Calorie goal (kcal/day)</label><input class="inp" id="wSetCal" type="number" placeholder="1800">
+    <label>Protein goal (g/day)</label><input class="inp" id="wSetProt" type="number" placeholder="120">
+    <label>Starting weight (kg)</label><input class="inp" id="wSetSWt" type="number" step="0.1" placeholder="72">
+    <label>Goal weight (kg)</label><input class="inp" id="wSetGWt" type="number" step="0.1" placeholder="62">
+    <label>Music / playlist link</label><input class="inp" id="wSetMusic" placeholder="https://open.spotify.com/...">
+    <button class="btn g" onclick="wSaveSetup()"><i class="ti ti-check"></i> Save</button>
+  </div>
+  <div style="background:var(--amber-l);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--amber-d);line-height:1.6;border:0.5px solid var(--amber)"><i class="ti ti-alert-triangle" style="margin-right:6px"></i>Get GP or midwife clearance before starting. Stop if you feel pelvic pressure, pain, or increased bleeding.</div>
+</div>
+
+</div><!-- end wife-screens -->
+
+<!-- HUSBAND SCREENS -->
+<div id="husband-screens" style="display:none">
+
+<div id="hsc-workout" class="sc on">
+  <div class="card" style="text-align:center">
+    <div style="font-size:15px;font-weight:500;margin-bottom:3px" id="hPhTitle">Ready to start</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem" id="hPhSub">30 min treadmill</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:.75rem;flex-wrap:wrap" id="hPills"></div>
+    <div style="position:relative;width:160px;height:160px;margin:0 auto .75rem">
+      <svg width="160" height="160" viewBox="0 0 160 160" style="transform:rotate(-90deg)">
+        <circle cx="80" cy="80" r="70" fill="none" stroke="var(--bg2)" stroke-width="9"/>
+        <circle id="hArc" cx="80" cy="80" r="70" fill="none" stroke="var(--blue)" stroke-width="9" stroke-dasharray="439.8" stroke-dashoffset="0" stroke-linecap="round"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:120px">
+        <div style="font-size:32px;font-weight:500;line-height:1" id="hDisp">5:00</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:3px" id="hLbl">ready</div>
+      </div>
+    </div>
+    <div class="pb" style="margin-bottom:1rem"><div class="pbf" id="hFill" style="width:0%;background:var(--blue)"></div></div>
+    <div style="display:flex;justify-content:center;gap:16px;margin-bottom:.75rem;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-size:22px;font-weight:500;color:var(--blue)" id="hSpeed">3.5</div><div style="font-size:11px;color:var(--text2)">speed km/h</div></div>
+      <div style="width:1px;height:36px;background:var(--border)"></div>
+      <div style="text-align:center"><div style="font-size:22px;font-weight:500;color:var(--teal)" id="hIncline">4%</div><div style="font-size:11px;color:var(--text2)">incline</div></div>
+      <div style="width:1px;height:36px;background:var(--border)"></div>
+      <div style="text-align:center"><div style="font-size:22px;font-weight:500;color:var(--text2)" id="hPhRem">5:00</div><div style="font-size:11px;color:var(--text2)">phase time</div></div>
+    </div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:.75rem" id="hCue">Warm up — speed 3.5, incline 4 for 5 minutes</div>
+    <button class="btn b" id="hBPlay" onclick="hTogTimer()" style="font-size:14px;padding:9px 20px"><i class="ti ti-player-play"></i> Start</button>
+    <div id="hMoodSec" style="display:none;margin-top:.75rem">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px">How do you feel?</div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+        <button class="mb" onclick="hSelMood('great',this)" style="background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d)">Great</button>
+        <button class="mb" onclick="hSelMood('good',this)" style="background:var(--green-l);border-color:var(--green);color:var(--green-d)">Good</button>
+        <button class="mb" onclick="hSelMood('ok',this)" style="background:var(--amber-l);border-color:var(--amber);color:var(--amber-d)">Ok</button>
+        <button class="mb" onclick="hSelMood('tired',this)" style="background:var(--red-l);border-color:var(--red);color:var(--red-d)">Tired</button>
+        <button class="mb" onclick="hSelMood('strong',this)" style="background:var(--purple-l);border-color:var(--purple);color:var(--purple-d)">Strong</button>
+      </div>
+    </div>
+    <div id="hRpeSec" style="display:none;margin-top:.75rem">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px">Effort (RPE 1–10)</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap" id="hRpeBtns"></div>
+    </div>
+    <button class="btn g" id="hBFinish" onclick="hLogWorkout()" style="display:none;width:100%;justify-content:center;margin-top:.75rem"><i class="ti ti-check"></i> Log workout</button>
+  </div>
+  <div class="card">
+    <div class="ct">Treadmill programme</div>
+    <div style="background:var(--blue-l);border-radius:var(--r);padding:10px 14px;margin-bottom:8px;border:0.5px solid #B5D4F4"><div style="font-size:13px;font-weight:500;color:var(--blue-d);margin-bottom:3px">Warm-up — 5 min</div><div style="font-size:12px;color:var(--blue-d)">Speed 3.5 · Incline 4% · Easy walk to raise heart rate</div></div>
+    <div style="background:var(--teal-l);border-radius:var(--r);padding:10px 14px;margin-bottom:8px;border:0.5px solid var(--teal-m)"><div style="font-size:13px;font-weight:500;color:var(--teal-d);margin-bottom:3px">Main run — 20 min</div><div style="font-size:12px;color:var(--teal-d)">Speed 4.0 · Incline 4% · Steady pace, breathe rhythmically</div></div>
+    <div style="background:var(--amber-l);border-radius:var(--r);padding:10px 14px;border:0.5px solid var(--amber)"><div style="font-size:13px;font-weight:500;color:var(--amber-d);margin-bottom:3px">Incline cool-down — 5 min</div><div style="font-size:12px;color:var(--amber-d)">Speed 3.5 · Incline 7% · Slower but steeper — targets glutes and calves</div></div>
+  </div>
+</div>
+
+<div id="hsc-nutrition" class="sc">
+  <div class="card">
+    <div class="ct">Today's calories</div>
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+      <div style="position:relative;width:130px;height:130px;flex-shrink:0">
+        <svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="55" fill="none" stroke="var(--bg2)" stroke-width="8"/><circle id="hCalArc" cx="65" cy="65" r="55" fill="none" stroke="var(--blue)" stroke-width="8" stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:65px 65px"/></svg>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center"><div style="font-size:20px;font-weight:500" id="hCalEat">0</div><div style="font-size:10px;color:var(--text2)">eaten</div></div>
+      </div>
+      <div style="flex:1;min-width:160px">
+        <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:.75rem">
+          <div class="stat"><div class="sn" id="hCalGoal">2200</div><div class="sl">goal</div></div>
+          <div class="stat"><div class="sn" id="hCalBurn">0</div><div class="sl">burned</div></div>
+          <div class="stat"><div class="sn" id="hCalRem">2200</div><div class="sl">remaining</div></div>
+        </div>
+        <div class="mr"><div class="ml">Protein</div><div class="pb" style="flex:1"><div class="pbf" id="hPProt" style="width:0%;background:var(--purple)"></div></div><div class="mv" id="hVProt">0g</div></div>
+        <div class="mr"><div class="ml">Carbs</div><div class="pb" style="flex:1"><div class="pbf" id="hPCarb" style="width:0%;background:var(--amber)"></div></div><div class="mv" id="hVCarb">0g</div></div>
+        <div class="mr"><div class="ml">Fat</div><div class="pb" style="flex:1"><div class="pbf" id="hPFat" style="width:0%;background:var(--red)"></div></div><div class="mv" id="hVFat">0g</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Log food</div>
+    <input class="inp" id="hFoodSearch" placeholder="Search — e.g. jollof, fufu, chicken, bread..." oninput="renderFoodDB('h')">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="hCatBtns"></div>
+    <div id="hFoodList" style="max-height:300px;overflow-y:auto;border:0.5px solid var(--border);border-radius:var(--r)"></div>
+  </div>
+  <div class="card"><div class="ct">Today's food log</div><div id="hFoodLog"><div style="font-size:13px;color:var(--text2)">Nothing logged yet.</div></div></div>
+  <div class="card">
+    <div class="ct">Water intake</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:4px">Aim 8–10 glasses daily</div>
+    <div class="wdots" id="hWater"></div>
+    <div style="font-size:13px;margin-top:4px"><span id="hWaterN" style="font-weight:500">0</span> <span style="color:var(--text2)">/ 8 glasses today</span></div>
+  </div>
+</div>
+
+<div id="hsc-body" class="sc">
+  <div class="card">
+    <div class="ct">Log measurements</div>
+    <div class="fg3"><div><label>Weight (kg)</label><input class="inp" id="hBWt" type="number" step="0.1" placeholder="85"></div><div><label>Waist (cm)</label><input class="inp" id="hBWa" type="number" placeholder="90"></div><div><label>Chest (cm)</label><input class="inp" id="hBCh" type="number" placeholder="100"></div></div>
+    <div class="fg3"><div><label>Hips (cm)</label><input class="inp" id="hBHi" type="number" placeholder="95"></div><div><label>Thigh (cm)</label><input class="inp" id="hBTh" type="number" placeholder="60"></div><div><label>Arms (cm)</label><input class="inp" id="hBAr" type="number" placeholder="35"></div></div>
+    <button class="btn g" onclick="hLogBody()"><i class="ti ti-check"></i> Save</button>
+  </div>
+  <div class="card"><div class="ct">Weight chart</div><div style="height:190px"><canvas id="hWtChart"></canvas></div></div>
+  <div class="card"><div class="ct">Measurements log</div><div id="hBodyLog"><div style="font-size:13px;color:var(--text2)">None yet.</div></div></div>
+  <div class="card">
+    <div class="ct">BMI calculator</div>
+    <div class="fg"><div><label>Height (cm)</label><input class="inp" id="hBMIh" type="number" placeholder="180" oninput="hCalcBMI()"></div><div><label>Weight (kg)</label><input class="inp" id="hBMIw" type="number" step="0.1" placeholder="85" oninput="hCalcBMI()"></div></div>
+    <div id="hBMIres" style="font-size:14px;color:var(--text2)">Enter height and weight</div>
+  </div>
+</div>
+
+<div id="hsc-progress" class="sc">
+  <div class="stat-grid"><div class="stat"><div class="sn" id="hStW">0</div><div class="sl">workouts</div></div><div class="stat"><div class="sn" id="hStWk">0</div><div class="sl">this week</div></div><div class="stat"><div class="sn" id="hStSt">0</div><div class="sl">streak</div></div><div class="stat"><div class="sn" id="hStMin">0</div><div class="sl">minutes</div></div></div>
+  <div class="card"><div class="ct">This month</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px" id="hCalGrid"></div></div>
+  <div class="card"><div class="ct">Effort over time (RPE)</div><div style="height:130px"><canvas id="hRpeChart"></canvas></div></div>
+  <div class="card"><div class="ct">Weekly summary</div><div id="hWeekSum"></div></div>
+  <div class="card"><div class="ct">Workout log</div><div id="hWkLog"><div style="font-size:13px;color:var(--text2)">No workouts yet.</div></div></div>
+  <button class="btn r" onclick="hClearAll()" style="margin-top:.25rem"><i class="ti ti-trash"></i> Reset my data</button>
+</div>
+
+<div id="hsc-rest" class="sc">
+  <div class="card"><div class="ct">Rest day recovery</div><div id="hRestList"></div></div>
+</div>
+
+<div id="hsc-badges" class="sc">
+  <div class="card"><div class="ct">Achievements</div><div class="bg-grid" id="hBadges"></div></div>
+</div>
+
+<div id="hsc-setup" class="sc">
+  <button class="btn" onclick="closeSetup()" style="margin-bottom:1rem"><i class="ti ti-arrow-left"></i> Back</button>
+  <div class="card">
+    <div class="ct">Profile &amp; goals</div>
+    <label>Your name</label><input class="inp" id="hSetName" placeholder="e.g. James">
+    <label>Calorie goal (kcal/day)</label><input class="inp" id="hSetCal" type="number" placeholder="2200">
+    <label>Protein goal (g/day)</label><input class="inp" id="hSetProt" type="number" placeholder="150">
+    <label>Starting weight (kg)</label><input class="inp" id="hSetSWt" type="number" step="0.1" placeholder="85">
+    <label>Goal weight (kg)</label><input class="inp" id="hSetGWt" type="number" step="0.1" placeholder="78">
+    <label>Music / playlist link</label><input class="inp" id="hSetMusic" placeholder="https://open.spotify.com/...">
+    <button class="btn g" onclick="hSaveSetup()"><i class="ti ti-check"></i> Save</button>
+  </div>
+</div>
+
+</div><!-- end husband-screens -->
+</div><!-- end .app -->
+
+<script>
+// ─── QUOTES ───
+var QUOTES = [
+  'Every rep is an investment in the strongest version of you.',
+  'Your body made a human. Now watch what else it can do.',
+  'Progress is progress, no matter how small.',
+  'Strong mum, strong family.',
+  'You showed up today. That is already a win.',
+  'The comeback is always stronger than the setback.',
+  'Small steps every day add up to enormous change.',
+  'Consistency beats perfection every time.'
+];
+
+// ─── WIFE WORKOUT PHASES ───
+var W_PHASES = [
+  {id:'skip',name:'Skipping',sub:'10 min warm-up',dur:600,color:'#E1F5EE',stroke:'#1D9E75',type:'cont',
+   ex:[{n:'Basic bounce skip',c:'Land softly on balls of feet. Pelvic floor gently lifted. Build pace after 2 min.',v:'https://youtube.com/shorts/FJmRQ5iTXKE'},
+       {n:'Alternate foot skip',c:'One foot at a time. Elbows at 90 degrees. Breathe rhythmically.',v:'https://youtube.com/shorts/FJmRQ5iTXKE'},
+       {n:'High knee skip',c:'Drive knees to hip height. Core engaged. Reduce if pelvic floor discomfort.',v:'https://youtube.com/shorts/FJmRQ5iTXKE'}]},
+  {id:'weights',name:'Dumbbell strength',sub:'10 min 45s/15s',dur:600,color:'#EEEDFE',stroke:'#7F77DD',type:'intv',wk:45,rs:15,
+   ex:[{n:'Goblet squat',c:'Hold DB at chest. Squat deep, 3 sec down, drive through heels. 8-10 reps.',v:'https://youtube.com/shorts/7-80HiXX1K8'},
+       {n:'Romanian deadlift',c:'Hinge at hips, 3 sec down. Squeeze glutes to drive up. 8-10 reps.',v:'https://youtube.com/shorts/eLX_dyvooKQ'},
+       {n:'Reverse lunge',c:'Step back, lower knee near floor. Push through front heel. 6-8 each.',v:'https://youtube.com/shorts/xrPteyQLGAo'},
+       {n:'Shoulder press',c:'Press overhead, brace core. 3 sec down. Do not flare ribs. 8-10 reps.',v:'https://youtube.com/shorts/qEq3Z-Wns_Y'},
+       {n:'Bent-over row',c:'Hinge 45 degrees, pull to hips, squeeze shoulder blades 1 sec. 8-10 reps.',v:'https://youtube.com/shorts/FWJR5Ve8bnQ'},
+       {n:'Single-leg glute bridge',c:'DB on hip. Drive through heel, squeeze glute 2 sec. Pelvic floor exhale. 8 each.',v:'https://youtube.com/shorts/SFgUPCHJXDo'},
+       {n:'Bicep curl slow eccentric',c:'Curl up 1 sec, lower over 4 sec. Elbows fixed. 10-12 reps.',v:'https://youtube.com/shorts/ykJmrZ5v0Oo'},
+       {n:'Lateral raise with pause',c:'Raise to shoulder height, pause 1 sec, lower 3 sec. 10-12 reps.',v:'https://youtube.com/shorts/3VcKaXpzqRo'}]},
+  {id:'run',name:'Interval running',sub:'10 min 30s run/10s walk',dur:600,color:'#FAEEDA',stroke:'#BA7517',type:'run',rn:30,wk2:10,
+   ex:[{n:'Running interval',c:'Conversational pace. Core braced. Midfoot strike. Arms forward.',v:'https://youtube.com/shorts/kVnyY17VS9Y'},
+       {n:'Walk recovery',c:'Active walk, swing arms, breathe fully. Exhale engages deep core.',v:'https://youtube.com/shorts/kVnyY17VS9Y'}]},
+  {id:'core',name:'Core and pelvic floor',sub:'10 min 45s/15s',dur:600,color:'#FCEBEB',stroke:'#E24B4A',type:'intv',wk:45,rs:15,
+   ex:[{n:'Diaphragmatic breathing',c:'Breathe in 360 degrees. On exhale, lift pelvic floor and draw lower belly in. Foundation.',v:'https://youtube.com/shorts/FBdHHFU1jIs'},
+       {n:'Dead bug arms only',c:'Lower one arm overhead, back flat. Exhale as you lower. 6-8 each side.',v:'https://youtube.com/shorts/4XLEnwUr1d8'},
+       {n:'Dead bug full',c:'Opposite arm and leg extend. Lower back stays flat throughout. 6 each side.',v:'https://youtube.com/shorts/4XLEnwUr1d8'},
+       {n:'Bird dog',c:'Extend opposite arm and leg, hold 3 sec. No rotation. Exhale on extension.',v:'https://youtube.com/shorts/wiFNA3sqjCA'},
+       {n:'Heel slide',c:'Slide heel to straight without arching lower back. 8 each side.',v:'https://youtube.com/shorts/9uVkRkLJLYQ'},
+       {n:'Glute bridge pelvic floor',c:'Exhale, lift pelvic floor, drive hips up. Hold 2 sec. Lower 3 sec. 10 reps.',v:'https://youtube.com/shorts/SFgUPCHJXDo'},
+       {n:'Side-lying clamshell',c:'Open top knee, feel outer glute. Do not let pelvis rock. 12 each side.',v:'https://youtube.com/shorts/h_oJbUjqBNM'},
+       {n:'Forearm plank from knees',c:'Breathe normally. Draw lower belly in gently. Build from 15 to 45 sec.',v:'https://youtube.com/shorts/ASdvN_XEl_c'}]},
+  {id:'cool',name:'Cool down',sub:'5 min stretch',dur:300,color:'#E6F1FB',stroke:'#378ADD',type:'cont',
+   ex:[{n:'Childs pose',c:'Sit back on heels, arms forward. Breathe deeply into your back.',v:'https://youtube.com/shorts/2MJGg-dUKh0'},
+       {n:'Cat-cow',c:'Inhale arch back, exhale round spine. Slow and rhythmic.',v:'https://youtube.com/shorts/kqnua4rHVVA'},
+       {n:'Hip flexor stretch',c:'One knee down, press hips forward gently. Hold 20 sec each side.',v:'https://youtube.com/shorts/YQmpR9niIMk'},
+       {n:'Box breathing',c:'Inhale 4, hold 4, exhale 4, hold 4. Repeat 5 times.',v:'https://youtube.com/shorts/FBdHHFU1jIs'}]}
+];
+
+// ─── HUSBAND TREADMILL PHASES ───
+var H_PHASES = [
+  {name:'Warm-up',dur:300,speed:'3.5',incline:'4%',stroke:'#378ADD',cue:'Walk at a comfortable pace. Let your heart rate rise gradually.'},
+  {name:'Main run',dur:1200,speed:'4.0',incline:'4%',stroke:'#1D9E75',cue:'Steady pace. Breathe rhythmically. You should be able to speak in short sentences.'},
+  {name:'Cool-down',dur:300,speed:'3.5',incline:'7%',stroke:'#BA7517',cue:'Slower speed, steeper incline. Targets glutes and calves while heart rate comes down.'}
+];
+
+// ─── FOOD DATABASE ───
+var FOOD_CATS = ['All','Breakfast','Lunch','Dinner','Snacks'];
+var FOOD_DB = [
+  {n:'Jollof rice (1 plate)',c:'Lunch',cu:'Ghanaian',cal:420,p:8,cb:78,f:9},
+  {n:'Jollof rice with chicken',c:'Dinner',cu:'Ghanaian',cal:620,p:36,cb:78,f:14},
+  {n:'Waakye with stew and egg',c:'Lunch',cu:'Ghanaian',cal:680,p:28,cb:84,f:16},
+  {n:'Fufu with light soup',c:'Dinner',cu:'Ghanaian',cal:560,p:12,cb:98,f:10},
+  {n:'Fufu with groundnut soup',c:'Dinner',cu:'Ghanaian',cal:680,p:22,cb:95,f:22},
+  {n:'Fufu with palm nut soup',c:'Dinner',cu:'Ghanaian',cal:720,p:20,cb:96,f:26},
+  {n:'Banku with tilapia and pepper',c:'Dinner',cu:'Ghanaian',cal:580,p:38,cb:72,f:14},
+  {n:'Banku with okro stew',c:'Dinner',cu:'Ghanaian',cal:520,p:14,cb:80,f:12},
+  {n:'Kenkey with fried fish',c:'Lunch',cu:'Ghanaian',cal:540,p:32,cb:70,f:16},
+  {n:'Red red beans and plantain',c:'Lunch',cu:'Ghanaian',cal:520,p:16,cb:86,f:14},
+  {n:'Kontomire stew with yam',c:'Dinner',cu:'Ghanaian',cal:460,p:12,cb:74,f:14},
+  {n:'Groundnut soup bowl',c:'Dinner',cu:'Ghanaian',cal:380,p:18,cb:18,f:28},
+  {n:'Fried plantain 1 cup',c:'Snacks',cu:'Ghanaian',cal:240,p:2,cb:40,f:9},
+  {n:'Boiled plantain 1 medium',c:'Snacks',cu:'Ghanaian',cal:180,p:2,cb:44,f:0},
+  {n:'Kelewele spiced plantain',c:'Snacks',cu:'Ghanaian',cal:260,p:2,cb:44,f:10},
+  {n:'Boflot puff puff 3 pieces',c:'Breakfast',cu:'Ghanaian',cal:280,p:4,cb:38,f:13},
+  {n:'Hausa koko with koose',c:'Breakfast',cu:'Ghanaian',cal:340,p:12,cb:50,f:11},
+  {n:'Tom brown porridge 1 cup',c:'Breakfast',cu:'Ghanaian',cal:200,p:6,cb:38,f:3},
+  {n:'Koose bean cakes 3 pieces',c:'Breakfast',cu:'Ghanaian',cal:240,p:10,cb:28,f:10},
+  {n:'Fried yam with pepper sauce',c:'Snacks',cu:'Ghanaian',cal:320,p:4,cb:56,f:10},
+  {n:'Boiled yam 1 cup',c:'Lunch',cu:'Ghanaian',cal:200,p:3,cb:46,f:0},
+  {n:'Tilapia grilled 1 medium',c:'Dinner',cu:'Ghanaian',cal:200,p:38,cb:0,f:5},
+  {n:'Milo with milk 1 mug',c:'Breakfast',cu:'Ghanaian',cal:200,p:6,cb:32,f:5},
+  {n:'Sobolo hibiscus drink 1 cup',c:'Snacks',cu:'Ghanaian',cal:60,p:0,cb:15,f:0},
+  {n:'Jollof rice Nigerian style',c:'Lunch',cu:'Nigerian',cal:440,p:9,cb:80,f:10},
+  {n:'Egusi soup with pounded yam',c:'Dinner',cu:'Nigerian',cal:720,p:26,cb:88,f:30},
+  {n:'Egusi soup with eba',c:'Dinner',cu:'Nigerian',cal:660,p:22,cb:84,f:28},
+  {n:'Pounded yam 1 serving',c:'Dinner',cu:'Nigerian',cal:360,p:4,cb:82,f:1},
+  {n:'Eba garri 1 serving',c:'Dinner',cu:'Nigerian',cal:320,p:2,cb:78,f:1},
+  {n:'Amala 1 serving',c:'Dinner',cu:'Nigerian',cal:280,p:3,cb:64,f:1},
+  {n:'Efo riro spinach stew',c:'Dinner',cu:'Nigerian',cal:320,p:18,cb:12,f:22},
+  {n:'Afang soup 1 bowl',c:'Dinner',cu:'Nigerian',cal:360,p:20,cb:10,f:26},
+  {n:'Okra soup with eba',c:'Dinner',cu:'Nigerian',cal:580,p:16,cb:88,f:18},
+  {n:'Ogbono soup with pounded yam',c:'Dinner',cu:'Nigerian',cal:700,p:22,cb:90,f:26},
+  {n:'Ofada rice with stew',c:'Lunch',cu:'Nigerian',cal:520,p:14,cb:84,f:14},
+  {n:'Moi moi 1 piece',c:'Breakfast',cu:'Nigerian',cal:180,p:12,cb:18,f:6},
+  {n:'Akara bean fritters 3 pieces',c:'Breakfast',cu:'Nigerian',cal:260,p:10,cb:28,f:12},
+  {n:'Pap akamu 1 cup',c:'Breakfast',cu:'Nigerian',cal:120,p:2,cb:26,f:1},
+  {n:'Pap with moi moi',c:'Breakfast',cu:'Nigerian',cal:300,p:14,cb:44,f:7},
+  {n:'Suya beef 100g',c:'Snacks',cu:'Nigerian',cal:260,p:28,cb:6,f:14},
+  {n:'Pepper soup 1 bowl',c:'Dinner',cu:'Nigerian',cal:220,p:24,cb:6,f:10},
+  {n:'Nigerian fried rice',c:'Lunch',cu:'Nigerian',cal:480,p:14,cb:78,f:13},
+  {n:'Plantain porridge 1 bowl',c:'Dinner',cu:'Nigerian',cal:420,p:8,cb:72,f:12},
+  {n:'Indomie noodles 1 pack',c:'Snacks',cu:'Nigerian',cal:380,p:9,cb:56,f:14},
+  {n:'Chin chin handful',c:'Snacks',cu:'Nigerian',cal:220,p:4,cb:30,f:10},
+  {n:'Puff puff 3 pieces',c:'Snacks',cu:'Nigerian',cal:270,p:4,cb:36,f:13},
+  {n:'Porridge oats with milk',c:'Breakfast',cu:'English',cal:280,p:10,cb:44,f:7},
+  {n:'Full English breakfast',c:'Breakfast',cu:'English',cal:720,p:36,cb:42,f:44},
+  {n:'2 boiled eggs on toast',c:'Breakfast',cu:'English',cal:340,p:20,cb:34,f:12},
+  {n:'2 scrambled eggs on toast',c:'Breakfast',cu:'English',cal:380,p:22,cb:34,f:16},
+  {n:'Beans on toast',c:'Breakfast',cu:'English',cal:320,p:14,cb:52,f:4},
+  {n:'Avocado toast 2 slices',c:'Breakfast',cu:'English',cal:380,p:9,cb:36,f:22},
+  {n:'Greek yoghurt with berries 200g',c:'Breakfast',cu:'English',cal:150,p:18,cb:14,f:2},
+  {n:'Grilled chicken breast 150g',c:'Lunch',cu:'English',cal:248,p:46,cb:0,f:5},
+  {n:'Roast chicken dinner',c:'Dinner',cu:'English',cal:580,p:42,cb:46,f:22},
+  {n:'Cottage pie 1 portion',c:'Dinner',cu:'English',cal:420,p:28,cb:38,f:16},
+  {n:'Shepherd pie 1 portion',c:'Dinner',cu:'English',cal:400,p:24,cb:38,f:16},
+  {n:'Fish and chips standard',c:'Dinner',cu:'English',cal:840,p:36,cb:88,f:38},
+  {n:'Baked salmon with veg',c:'Dinner',cu:'English',cal:380,p:34,cb:18,f:18},
+  {n:'Jacket potato with tuna',c:'Lunch',cu:'English',cal:460,p:28,cb:64,f:8},
+  {n:'Jacket potato with cheese',c:'Lunch',cu:'English',cal:520,p:20,cb:64,f:20},
+  {n:'Chicken sandwich wholegrain',c:'Lunch',cu:'English',cal:380,p:30,cb:38,f:10},
+  {n:'Tuna sandwich wholegrain',c:'Lunch',cu:'English',cal:360,p:26,cb:38,f:9},
+  {n:'Tomato soup with bread',c:'Lunch',cu:'English',cal:280,p:8,cb:42,f:8},
+  {n:'Lentil soup 1 bowl',c:'Lunch',cu:'English',cal:220,p:14,cb:32,f:3},
+  {n:'Pasta with tomato sauce',c:'Dinner',cu:'English',cal:440,p:14,cb:78,f:8},
+  {n:'Pasta with chicken and pesto',c:'Dinner',cu:'English',cal:560,p:32,cb:72,f:16},
+  {n:'Brown rice 150g cooked',c:'Lunch',cu:'English',cal:165,p:4,cb:35,f:1},
+  {n:'Sweet potato baked 1 medium',c:'Dinner',cu:'English',cal:130,p:2,cb:30,f:0},
+  {n:'Banana 1 medium',c:'Snacks',cu:'English',cal:90,p:1,cb:23,f:0},
+  {n:'Apple 1 medium',c:'Snacks',cu:'English',cal:80,p:0,cb:20,f:0},
+  {n:'Almonds 30g',c:'Snacks',cu:'English',cal:173,p:6,cb:6,f:15},
+  {n:'Protein shake 1 scoop',c:'Snacks',cu:'English',cal:150,p:25,cb:8,f:3},
+  {n:'Whole milk 250ml',c:'Snacks',cu:'English',cal:149,p:8,cb:12,f:8},
+  {n:'Tea with milk',c:'Snacks',cu:'English',cal:30,p:1,cb:4,f:1},
+  {n:'Coffee with milk',c:'Snacks',cu:'English',cal:40,p:2,cb:4,f:2},
+  {n:'Peanut butter on rice cake 2',c:'Snacks',cu:'English',cal:200,p:7,cb:18,f:12},
+  {n:'Weetabix 2 biscuits with milk',c:'Breakfast',cu:'English',cal:240,p:10,cb:40,f:4},
+  {n:'Cornflakes with milk',c:'Breakfast',cu:'English',cal:230,p:7,cb:44,f:3}
+];
+
+// ─── BADGES ───
+var BADGES = [
+  {id:'first',name:'First step',desc:'Complete first workout',icon:'ti-player-play',color:'#E1F5EE',tc:'#0F6E56',check:function(s){return s.logs.length>=1;}},
+  {id:'week1',name:'Week warrior',desc:'4 workouts in a week',icon:'ti-calendar',color:'#EEEDFE',tc:'#3C3489',check:function(s){var now=new Date(),ws=new Date(now);ws.setDate(now.getDate()-((now.getDay()+6)%7));ws.setHours(0,0,0,0);return s.completedDays.filter(function(d){return new Date(d)>=ws;}).length>=4;}},
+  {id:'streak5',name:'On fire',desc:'5-day streak',icon:'ti-flame',color:'#FAEEDA',tc:'#633806',check:function(s){var str=0,ch=new Date();ch.setHours(0,0,0,0);for(var i=0;i<30;i++){var ds=ch.toISOString().slice(0,10);if(s.completedDays.indexOf(ds)>-1){str++;ch.setDate(ch.getDate()-1);}else{if(i===0){ch.setDate(ch.getDate()-1);continue;}break;}}return str>=5;}},
+  {id:'w10',name:'10 workouts',desc:'Log 10 sessions',icon:'ti-trophy',color:'#EAF3DE',tc:'#27500A',check:function(s){return s.logs.length>=10;}},
+  {id:'w20',name:'20 sessions',desc:'Log 20 sessions',icon:'ti-award',color:'#E6F1FB',tc:'#0C447C',check:function(s){return s.logs.length>=20;}},
+  {id:'hydrated',name:'Hydrated',desc:'Log 8 glasses in a day',icon:'ti-droplet',color:'#E6F1FB',tc:'#0C447C',check:function(s){return Object.keys(s.water).some(function(k){return s.water[k]>=8;});}},
+  {id:'foodlog',name:'Fuel master',desc:'Log 3 days of food',icon:'ti-apple',color:'#EAF3DE',tc:'#27500A',check:function(s){return Object.keys(s.food).length>=3;}},
+  {id:'measure',name:'Body tracker',desc:'Log 3 measurements',icon:'ti-ruler-measure',color:'#FBEAF0',tc:'#72243E',check:function(s){return s.bodyLogs.length>=3;}}
+];
+
+// ─── REST TIPS ───
+var REST_TIPS = [
+  {icon:'ti-walk',t:'20-min walk',b:'Fresh air and low impact. A pram walk doubles as support for your partner.'},
+  {icon:'ti-yoga',t:'Stretching session 15 min',b:'Hips, hamstrings, chest opener. Addresses tightness from feeding positions.'},
+  {icon:'ti-swimming',t:'Swimming',b:'Zero impact, full body active recovery. Check wound is fully healed first.'},
+  {icon:'ti-moon',t:'Sleep and rest',b:'Muscle adaptation happens during rest. Nap when the baby naps.'}
+];
+var PF_TIPS = [
+  {icon:'ti-heart',t:'10 slow holds',b:'Gently lift pelvic floor and hold 10 seconds. Repeat 10 times, twice daily.'},
+  {icon:'ti-repeat',t:'10 fast flicks',b:'Quick lift and release, 1 second each. 10 in a row. Rebuilds fast-twitch fibres.'},
+  {icon:'ti-run',t:'Functional bracing',b:'Pre-contract pelvic floor before coughing, sneezing or lifting. Becomes automatic.'},
+  {icon:'ti-stairs',t:'Stair challenge',b:'Gently lift pelvic floor on each step up. Release on step down. Daily habit.'}
+];
+
+// ─── STORAGE ───
+var wS={}, hS={};
+try{var wd=localStorage.getItem('fw_wife');if(wd)wS=JSON.parse(wd);}catch(e){}
+try{var hd=localStorage.getItem('fw_hus');if(hd)hS=JSON.parse(hd);}catch(e){}
+function initStore(s){
+  if(!s.logs)s.logs=[];if(!s.bodyLogs)s.bodyLogs=[];if(!s.completedDays)s.completedDays=[];
+  if(!s.earnedBadges)s.earnedBadges=[];if(!s.food)s.food={};if(!s.water)s.water={};
+  if(!s.strength)s.strength=[];if(!s.milestones)s.milestones=[];
+  if(!s.calGoal)s.calGoal=1800;if(!s.protGoal)s.protGoal=120;
+  if(!s.goalWt)s.goalWt=0;if(!s.startWt)s.startWt=0;if(!s.music)s.music='';if(!s.name)s.name='';
+}
+initStore(wS);initStore(hS);
+hS.calGoal=hS.calGoal||2200;hS.protGoal=hS.protGoal||150;
+function svW(){try{localStorage.setItem('fw_wife',JSON.stringify(wS));}catch(e){}}
+function svH(){try{localStorage.setItem('fw_hus',JSON.stringify(hS));}catch(e){}}
+function td(){return new Date().toISOString().slice(0,10);}
+function fmt(s){var m=Math.floor(s/60),sec=s%60;return m+':'+(sec<10?'0':'')+sec;}
+
+// ─── SOUND ───
+var soundOn=true, aC=null;
+function gAC(){if(!aC)aC=new(window.AudioContext||window.webkitAudioContext)();return aC;}
+function bp(f,d,v,t){if(!soundOn)return;try{var c=gAC(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||0.3,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
+function bpStart(){bp(880,0.12,0.35);setTimeout(function(){bp(1100,0.15,0.35);},140);}
+function bpStop(){bp(440,0.15,0.3);setTimeout(function(){bp(330,0.2,0.25);},160);}
+function bpWork(){bp(1047,0.1,0.4,'square');setTimeout(function(){bp(1319,0.15,0.3,'square');},110);}
+function bpRest(){bp(523,0.18,0.25);}
+function bpEnd(){bp(1047,0.1,0.4);setTimeout(function(){bp(1319,0.1,0.4);},100);setTimeout(function(){bp(1568,0.25,0.4);},210);}
+function bpFin(){var ts=[0,130,260,420];for(var i=0;i<ts.length;i++){(function(ii){setTimeout(function(){bp(880+ii*220,0.2,0.35);},ts[ii]);})(i);}}
+function bpTick(){bp(660,0.07,0.2,'square');}
+function toggleSound(){soundOn=!soundOn;document.getElementById('soundSw').className='sw'+(soundOn?'':' off');document.getElementById('soundLbl').textContent=soundOn?'Sound on':'Sound off';}
+
+// ─── PROFILE SWITCH ───
+var activeProfile='wife';
+var W_TABS=[{id:'wsc-workout',l:'Workout',i:'ti-player-play'},{id:'wsc-nutrition',l:'Nutrition',i:'ti-apple'},{id:'wsc-body',l:'Body',i:'ti-ruler-measure'},{id:'wsc-progress',l:'Progress',i:'ti-chart-bar'},{id:'wsc-baby',l:'Baby',i:'ti-heart'},{id:'wsc-rest',l:'Rest',i:'ti-leaf'},{id:'wsc-badges',l:'Badges',i:'ti-trophy'}];
+var H_TABS=[{id:'hsc-workout',l:'Workout',i:'ti-run'},{id:'hsc-nutrition',l:'Nutrition',i:'ti-apple'},{id:'hsc-body',l:'Body',i:'ti-ruler-measure'},{id:'hsc-progress',l:'Progress',i:'ti-chart-bar'},{id:'hsc-rest',l:'Rest',i:'ti-leaf'},{id:'hsc-badges',l:'Badges',i:'ti-trophy'}];
+
+function switchProfile(p){
+  activeProfile=p;
+  document.getElementById('wife-screens').style.display=p==='wife'?'block':'none';
+  document.getElementById('husband-screens').style.display=p==='husband'?'block':'none';
+  document.getElementById('profW').className='prof-btn'+(p==='wife'?' aw':'');
+  document.getElementById('profH').className='prof-btn'+(p==='husband'?' ah':'');
+  var tabs=p==='wife'?W_TABS:H_TABS;
+  var nav=document.getElementById('mainNav');
+  nav.innerHTML='';
+  for(var i=0;i<tabs.length;i++){
+    var t=tabs[i];
+    var b=document.createElement('button');
+    b.className='nt'+(i===0?' on':'');
+    b.innerHTML='<i class="ti '+t.i+'"></i> '+t.l;
+    b.setAttribute('data-id',t.id);
+    b.onclick=(function(tid,btn){return function(){showScreen(tid,btn);};})(t.id,b);
+    nav.appendChild(b);
+  }
+  document.getElementById('hdrTitle').textContent=(p==='wife'?(wS.name||'Wife'):( hS.name||'Husband'))+' — Wellness Hub';
+  document.getElementById('hdrSub').textContent=p==='wife'?'Mon-Thu · 45 min':'30 min treadmill · Mon-Fri';
+  document.getElementById('quoteBox').textContent=QUOTES[new Date().getDay()%QUOTES.length];
+  var mb=document.getElementById('musicBtn');
+  var ms=p==='wife'?wS.music:hS.music;
+  mb.innerHTML=ms?'<a href="'+ms+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r);border:0.5px solid var(--purple);background:var(--purple-l);color:var(--purple-d);font-size:12px;font-weight:500;text-decoration:none;margin-bottom:.75rem"><i class="ti ti-music"></i> Open playlist</a>':'';
+  // activate first tab screen
+  var allScW=document.querySelectorAll('#wife-screens .sc');
+  var allScH=document.querySelectorAll('#husband-screens .sc');
+  allScW.forEach(function(s){s.classList.remove('on');});
+  allScH.forEach(function(s){s.classList.remove('on');});
+  if(tabs[0])document.getElementById(tabs[0].id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function showScreen(id,btn){
+  var screens=activeProfile==='wife'?document.querySelectorAll('#wife-screens .sc'):document.querySelectorAll('#husband-screens .sc');
+  screens.forEach(function(s){s.classList.remove('on');});
+  document.querySelectorAll('#mainNav .nt').forEach(function(b){b.classList.remove('on');});
+  var sc=document.getElementById(id);
+  if(sc)sc.classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(id==='wsc-nutrition')wRenderNut();
+  if(id==='hsc-nutrition')hRenderNut();
+  if(id==='wsc-progress')wRenderProg();
+  if(id==='hsc-progress')hRenderProg();
+  if(id==='wsc-body')wRenderBody();
+  if(id==='hsc-body')hRenderBody();
+  if(id==='wsc-badges')renderBadges('wife');
+  if(id==='hsc-badges')renderBadges('husband');
+  if(id==='wsc-baby')wRenderBaby();
+  window.scrollTo(0,0);
+}
+
+function showSetup(){
+  var id=activeProfile==='wife'?'wsc-setup':'hsc-setup';
+  showScreen(id,null);
+}
+function closeSetup(){
+  var id=activeProfile==='wife'?'wsc-workout':'hsc-workout';
+  showScreen(id,document.querySelector('#mainNav .nt'));
+}
+
+// ─── WIFE WORKOUT TIMER ───
+var wT={ph:0,run:false,pEl:0,iSt:'work',iCt:0,iT:0,fin:false,mood:null,rpe:null};
+var wTmr=null;
+function wCalcTR(pi){var p=W_PHASES[pi];if(p.type==='intv')return Math.floor(p.dur/(p.wk+p.rs));if(p.type==='run')return Math.floor(p.dur/(p.rn+p.wk2));return 0;}
+function wRenderPills(){
+  var html='';
+  for(var i=0;i<W_PHASES.length;i++){
+    var p=W_PHASES[i],a=i===wT.ph,dn=i<wT.ph||(wT.fin&&i<=wT.ph);
+    html+='<span class="pp" style="background:'+(a||dn?p.color:'var(--bg2)')+';border-color:'+(a?p.stroke:'transparent')+';'+(a?'font-weight:500;':'')+'color:var(--text2)">'+(dn&&!a?'checkmark ':'')+p.name+'</span>';
+  }
+  document.getElementById('wPills').innerHTML=html;
+}
+function wRenderExList(){
+  var p=W_PHASES[wT.ph],html='';
+  for(var i=0;i<p.ex.length;i++){
+    var e=p.ex[i];
+    html+='<div style="background:'+(i%2===0?'var(--bg2)':'transparent')+';border-radius:var(--r);padding:9px 11px;margin-bottom:5px">'+'<div style="font-size:13px;font-weight:500;margin-bottom:3px">'+e.n+'</div>'+'<div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:5px">'+e.c+'</div>'+'<a href="'+e.v+'" target="_blank" class="vlink"><i class="ti ti-brand-youtube" style="font-size:11px"></i> Watch demo</a></div>';
+  }
+  document.getElementById('wExList').innerHTML=html;
+}
+function wUpdDisp(){
+  var p=W_PHASES[wT.ph],rem,lbl,fp,exi;
+  if(p.type==='cont'){rem=p.dur-wT.pEl;lbl=p.id==='cool'?'cool down':'skipping';fp=rem/p.dur;exi=Math.min(Math.floor((wT.pEl/p.dur)*p.ex.length),p.ex.length-1);document.getElementById('wRep').textContent='';document.getElementById('wNxt').textContent=fmt(rem)+' remaining';}
+  else if(p.type==='intv'){var d=wT.iSt==='work'?p.wk:p.rs;rem=d-wT.iT;lbl=wT.iSt;fp=rem/d;document.getElementById('wRep').textContent=(wT.iCt+1)+'/'+wCalcTR(wT.ph);exi=wT.iCt%p.ex.length;document.getElementById('wNxt').textContent=wT.iSt==='work'?'Next: '+p.ex[(wT.iCt+1)%p.ex.length].n:'Coming up: '+p.ex[(wT.iCt+1)%p.ex.length].n;}
+  else{var d2=wT.iSt==='work'?p.rn:p.wk2;rem=d2-wT.iT;lbl=wT.iSt==='work'?'run':'walk';fp=rem/d2;document.getElementById('wRep').textContent=(wT.iCt+1)+'/'+wCalcTR(wT.ph)+' intervals';exi=wT.iSt==='work'?0:1;document.getElementById('wNxt').textContent=wT.iSt==='work'?'Walk in '+rem+'s':'Run in '+rem+'s';}
+  document.getElementById('wDisp').textContent=fmt(Math.max(0,rem));
+  document.getElementById('wLbl').textContent=lbl;
+  document.getElementById('wPhTitle').textContent=p.name;
+  document.getElementById('wPhSub').textContent=p.sub+' phase '+(wT.ph+1)+'/'+W_PHASES.length;
+  var arc=document.getElementById('wArc'),circ=2*Math.PI*70;
+  arc.style.stroke=wT.iSt==='rest'?'#9FE1CB':p.stroke;
+  arc.setAttribute('stroke-dasharray',circ.toFixed(1));
+  arc.setAttribute('stroke-dashoffset',(circ*(1-Math.max(0,fp))).toFixed(1));
+  document.getElementById('wFill').style.background=wT.iSt==='rest'?'#9FE1CB':p.stroke;
+  document.getElementById('wFill').style.width=(Math.max(0,fp)*100)+'%';
+  var ex=p.ex[exi],isRest=wT.iSt==='rest'&&p.type==='intv';
+  document.getElementById('wExCard').style.display='block';
+  document.getElementById('wExName').textContent=isRest?'Rest and recover':ex.n;
+  document.getElementById('wExCue').textContent=isRest?'Shake out. Breathe. Coming up: '+p.ex[(wT.iCt+1)%p.ex.length].n:ex.c;
+  var vl=document.getElementById('wExVid');
+  if(!isRest&&ex.v){vl.href=ex.v;vl.style.display='inline-flex';}else{vl.style.display='none';}
+  wRenderPills();
+}
+function wTick(){
+  wT.pEl++;wT.iT++;
+  var p=W_PHASES[wT.ph];
+  if(p.type!=='cont'){
+    var dur=p.type==='run'?(wT.iSt==='work'?p.rn:p.wk2):(wT.iSt==='work'?p.wk:p.rs);
+    var r=dur-wT.iT;
+    if(r<=3&&r>0)bpTick();
+    if(wT.iT>=dur){wT.iT=0;if(wT.iSt==='work'){wT.iSt='rest';bpRest();}else{wT.iSt='work';wT.iCt++;bpWork();}}
+  }
+  if(wT.pEl>=p.dur){
+    bpEnd();
+    if(wT.ph<W_PHASES.length-1){wT.ph++;wT.pEl=0;wT.iSt='work';wT.iCt=0;wT.iT=0;wRenderExList();wShowBtns();}
+    else{clearInterval(wTmr);wTmr=null;wT.run=false;wT.fin=true;bpFin();
+      document.getElementById('wBPlay').innerHTML='<i class="ti ti-check"></i> Done!';
+      document.getElementById('wBPlay').disabled=true;
+      document.getElementById('wBBack').style.display='none';document.getElementById('wBSkip').style.display='none';
+      document.getElementById('wMoodSec').style.display='block';document.getElementById('wRpeSec').style.display='block';
+      document.getElementById('wBFinish').style.display='flex';
+      var rh='';for(var i=1;i<=10;i++)rh+='<button onclick="wSelRpe('+i+',this)" style="padding:5px 9px;border-radius:var(--r);border:0.5px solid var(--border2);background:transparent;cursor:pointer;font-size:12px;font-family:inherit;color:var(--text2)">'+i+'</button>';
+      document.getElementById('wRpeBtns').innerHTML=rh;
+    }
+  }
+  wUpdDisp();
+}
+function wTogTimer(){if(wT.fin)return;if(wT.run){clearInterval(wTmr);wTmr=null;wT.run=false;bpStop();document.getElementById('wBPlay').innerHTML='<i class="ti ti-player-play"></i> Resume';}else{wT.run=true;bpStart();document.getElementById('wBPlay').innerHTML='<i class="ti ti-player-pause"></i> Pause';document.getElementById('wBBack').style.display='inline-flex';document.getElementById('wBSkip').style.display='inline-flex';wTmr=setInterval(wTick,1000);}wUpdDisp();}
+function wShowBtns(){document.getElementById('wBBack').style.display=wT.ph>0?'inline-flex':'none';document.getElementById('wBSkip').style.display=wT.ph<W_PHASES.length-1?'inline-flex':'none';}
+function wNextPh(){if(wT.ph<W_PHASES.length-1){wT.ph++;wT.pEl=0;wT.iSt='work';wT.iCt=0;wT.iT=0;wRenderExList();wShowBtns();wUpdDisp();}}
+function wPrevPh(){if(wT.ph>0){wT.ph--;wT.pEl=0;wT.iSt='work';wT.iCt=0;wT.iT=0;wRenderExList();wShowBtns();wUpdDisp();}}
+function wSelMood(m,el){wT.mood=m;document.querySelectorAll('#wMoodSec .mb').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
+function wSelRpe(v,el){wT.rpe=v;document.querySelectorAll('#wRpeBtns button').forEach(function(b){b.style.background='transparent';b.style.color='var(--text2)';});el.style.background='var(--teal-l)';el.style.color='var(--teal-d)';}
+function wLogWorkout(){
+  var today=td();
+  wS.logs.unshift({date:today,mins:45,rpe:wT.rpe,mood:wT.mood});
+  if(wS.completedDays.indexOf(today)<0)wS.completedDays.push(today);
+  svW();wCheckBadges();
+  document.getElementById('wBFinish').textContent='Logged!';
+  document.getElementById('wBFinish').disabled=true;
+}
+
+// ─── HUSBAND TREADMILL TIMER ───
+var hT={ph:0,run:false,elapsed:0,fin:false,mood:null,rpe:null};
+var hTmr=null;
+function hPhEl(){var tot=0;for(var i=0;i<hT.ph;i++)tot+=H_PHASES[i].dur;return hT.elapsed-tot;}
+function hUpdDisp(){
+  var p=H_PHASES[hT.ph],phEl=hPhEl(),rem=Math.max(0,p.dur-phEl),fp=rem/p.dur;
+  var totDur=0;for(var i=0;i<H_PHASES.length;i++)totDur+=H_PHASES[i].dur;
+  document.getElementById('hDisp').textContent=fmt(rem);
+  document.getElementById('hLbl').textContent=p.name.toLowerCase();
+  document.getElementById('hPhTitle').textContent=p.name;
+  document.getElementById('hPhSub').textContent='30 min treadmill phase '+(hT.ph+1)+'/3 '+fmt(Math.max(0,totDur-hT.elapsed))+' total left';
+  document.getElementById('hSpeed').textContent=p.speed;
+  document.getElementById('hIncline').textContent=p.incline;
+  document.getElementById('hPhRem').textContent=fmt(rem);
+  document.getElementById('hCue').textContent=p.cue;
+  var arc=document.getElementById('hArc'),circ=2*Math.PI*70;
+  arc.style.stroke=p.stroke;
+  arc.setAttribute('stroke-dasharray',circ.toFixed(1));
+  arc.setAttribute('stroke-dashoffset',(circ*(1-fp)).toFixed(1));
+  document.getElementById('hFill').style.background=p.stroke;
+  document.getElementById('hFill').style.width=((1-fp)*100)+'%';
+  var ph='';for(var j=0;j<H_PHASES.length;j++){var hp=H_PHASES[j];ph+='<span class="pp" style="background:'+(j<=hT.ph?hp.stroke+'22':'var(--bg2)')+';border-color:'+(j===hT.ph?hp.stroke:'transparent')+';'+(j===hT.ph?'font-weight:500;':'')+'color:var(--text2)">'+(j<hT.ph?'done ':'')+hp.name+'</span>';}
+  document.getElementById('hPills').innerHTML=ph;
+}
+function hTick(){
+  hT.elapsed++;
+  var phEl=hPhEl(),p=H_PHASES[hT.ph],r=p.dur-phEl;
+  if(r<=3&&r>0)bpTick();
+  if(phEl>=p.dur){
+    bpEnd();
+    if(hT.ph<H_PHASES.length-1){hT.ph++;}
+    else{clearInterval(hTmr);hTmr=null;hT.run=false;hT.fin=true;bpFin();
+      document.getElementById('hBPlay').innerHTML='<i class="ti ti-check"></i> Done!';
+      document.getElementById('hBPlay').disabled=true;
+      document.getElementById('hMoodSec').style.display='block';document.getElementById('hRpeSec').style.display='block';
+      document.getElementById('hBFinish').style.display='flex';
+      var rh='';for(var i=1;i<=10;i++)rh+='<button onclick="hSelRpe('+i+',this)" style="padding:5px 9px;border-radius:var(--r);border:0.5px solid var(--border2);background:transparent;cursor:pointer;font-size:12px;font-family:inherit;color:var(--text2)">'+i+'</button>';
+      document.getElementById('hRpeBtns').innerHTML=rh;
+    }
+  }
+  hUpdDisp();
+}
+function hTogTimer(){if(hT.fin)return;if(hT.run){clearInterval(hTmr);hTmr=null;hT.run=false;bpStop();document.getElementById('hBPlay').innerHTML='<i class="ti ti-player-play"></i> Start';}else{hT.run=true;bpStart();document.getElementById('hBPlay').innerHTML='<i class="ti ti-player-pause"></i> Pause';hTmr=setInterval(hTick,1000);}hUpdDisp();}
+function hSelMood(m,el){hT.mood=m;document.querySelectorAll('#hMoodSec .mb').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
+function hSelRpe(v,el){hT.rpe=v;document.querySelectorAll('#hRpeBtns button').forEach(function(b){b.style.background='transparent';b.style.color='var(--text2)';});el.style.background='var(--blue-l)';el.style.color='var(--blue-d)';}
+function hLogWorkout(){var today=td();hS.logs.unshift({date:today,mins:30,rpe:hT.rpe,mood:hT.mood});if(hS.completedDays.indexOf(today)<0)hS.completedDays.push(today);svH();hCheckBadges();document.getElementById('hBFinish').textContent='Logged!';document.getElementById('hBFinish').disabled=true;}
+
+// ─── FOOD DB ───
+var wFoodCat='All', hFoodCat='All';
+var wFiltered=[], hFiltered=[];
+
+function initCatBtns(who){
+  var id=who==='w'?'wCatBtns':'hCatBtns';
+  var cur=who==='w'?wFoodCat:hFoodCat;
+  var html='';
+  for(var i=0;i<FOOD_CATS.length;i++){
+    var c=FOOD_CATS[i];
+    html+='<button onclick="setFoodCat(\''+who+'\',\''+c+'\')" style="padding:4px 10px;border-radius:20px;border:0.5px solid '+(c===cur?'var(--teal)':'var(--border2)')+';background:'+(c===cur?'var(--teal-l)':'transparent')+';color:'+(c===cur?'var(--teal-d)':'var(--text2)')+';cursor:pointer;font-size:11px;font-weight:'+(c===cur?'500':'400')+';font-family:inherit;white-space:nowrap">'+c+'</button>';
+  }
+  document.getElementById(id).innerHTML=html;
+}
+function setFoodCat(who,cat){if(who==='w')wFoodCat=cat;else hFoodCat=cat;initCatBtns(who);renderFoodDB(who);}
+
+function renderFoodDB(who){
+  var searchId=who==='w'?'wFoodSearch':'hFoodSearch';
+  var listId=who==='w'?'wFoodList':'hFoodList';
+  var cat=who==='w'?wFoodCat:hFoodCat;
+  var q=(document.getElementById(searchId).value||'').toLowerCase().trim();
+  var results=[];
+  for(var i=0;i<FOOD_DB.length;i++){
+    var f=FOOD_DB[i];
+    var catOk=(cat==='All'||f.c===cat);
+    var srchOk=(!q||f.n.toLowerCase().indexOf(q)>-1||f.cu.toLowerCase().indexOf(q)>-1);
+    if(catOk&&srchOk)results.push(f);
+  }
+  if(who==='w')wFiltered=results;else hFiltered=results;
+  if(!results.length){document.getElementById(listId).innerHTML='<div style="padding:16px;font-size:13px;color:var(--text2);text-align:center">No foods found.</div>';return;}
+  var bs='flex-shrink:0;padding:5px 12px;border-radius:var(--r);border:0.5px solid var(--teal);background:var(--teal-l);color:var(--teal-d);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit';
+  var html='';
+  if(!q){
+    var cuisines=[];
+    for(var i=0;i<results.length;i++){if(cuisines.indexOf(results[i].cu)<0)cuisines.push(results[i].cu);}
+    for(var ci=0;ci<cuisines.length;ci++){
+      var cu=cuisines[ci];
+      var flag=cu==='Ghanaian'?'🇬🇭':cu==='Nigerian'?'🇳🇬':'🇬🇧';
+      html+='<div style="padding:7px 12px 4px;font-size:11px;font-weight:500;color:var(--text2);background:var(--bg2);border-bottom:0.5px solid var(--border)">'+flag+' '+cu+'</div>';
+      for(var i=0;i<results.length;i++){
+        if(results[i].cu!==cu)continue;
+        var idx=i;
+        html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-bottom:0.5px solid var(--border);gap:8px"><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+results[i].n+'</div><div style="font-size:11px;color:var(--text2);margin-top:2px">'+results[i].cal+' kcal P:'+results[i].p+'g C:'+results[i].cb+'g F:'+results[i].f+'g</div></div><button onclick="logFood('+idx+',\''+who+'\')" style="'+bs+'">+ Log</button></div>';
+      }
+    }
+  }else{
+    for(var i=0;i<results.length;i++){
+      var flag2=results[i].cu==='Ghanaian'?'🇬🇭':results[i].cu==='Nigerian'?'🇳🇬':'🇬🇧';
+      html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-bottom:0.5px solid var(--border);gap:8px"><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+results[i].n+'</div><div style="font-size:11px;color:var(--text2);margin-top:2px">'+flag2+' '+results[i].cu+' '+results[i].cal+' kcal P:'+results[i].p+'g C:'+results[i].cb+'g F:'+results[i].f+'g</div></div><button onclick="logFood('+i+',\''+who+'\')" style="'+bs+'">+ Log</button></div>';
+    }
+  }
+  document.getElementById(listId).innerHTML=html;
+}
+
+function logFood(idx,who){
+  var arr=who==='w'?wFiltered:hFiltered;
+  var f=arr[idx];if(!f)return;
+  var today=td(),s=who==='w'?wS:hS;
+  if(!s.food[today])s.food[today]=[];
+  s.food[today].push({name:f.n,cal:f.cal,prot:f.p,carb:f.cb,fat:f.f});
+  if(who==='w'){svW();wRenderNut();}else{svH();hRenderNut();}
+}
+
+// ─── WIFE NUTRITION RENDER ───
+function wRenderNut(){
+  var today=td(),foods=wS.food[today]||[];
+  var tc=0,tp=0,tcb=0,tf=0;
+  for(var i=0;i<foods.length;i++){tc+=foods[i].cal;tp+=foods[i].prot||0;tcb+=foods[i].carb||0;tf+=foods[i].fat||0;}
+  var goal=wS.calGoal||1800,burn=wS.logs.filter(function(l){return l.date===today;}).length?300:0;
+  document.getElementById('wCalEat').textContent=Math.round(tc);
+  document.getElementById('wCalGoal').textContent=Math.round(goal);
+  document.getElementById('wCalBurn').textContent=Math.round(burn);
+  document.getElementById('wCalRem').textContent=Math.max(0,Math.round(goal-tc+burn));
+  var pg=wS.protGoal||120;
+  document.getElementById('wVProt').textContent=Math.round(tp)+'g';document.getElementById('wPProt').style.width=Math.min(100,(tp/pg)*100)+'%';
+  document.getElementById('wVCarb').textContent=Math.round(tcb)+'g';document.getElementById('wPCarb').style.width=Math.min(100,(tcb/250)*100)+'%';
+  document.getElementById('wVFat').textContent=Math.round(tf)+'g';document.getElementById('wPFat').style.width=Math.min(100,(tf/65)*100)+'%';
+  var circ=2*Math.PI*55;
+  document.getElementById('wCalArc').setAttribute('stroke-dashoffset',(circ*(1-Math.min(1,tc/goal))).toFixed(1));
+  document.getElementById('wCalArc').style.stroke=tc>goal?'#E24B4A':'#1D9E75';
+  if(foods.length){
+    var fl='';
+    for(var i=0;i<foods.length;i++){fl+='<div class="fi"><div><div style="font-weight:500">'+foods[i].name+'</div><div style="font-size:11px;color:var(--text2)">'+Math.round(foods[i].cal)+' kcal P:'+Math.round(foods[i].prot||0)+'g C:'+Math.round(foods[i].carb||0)+'g</div></div><button onclick="wRemFood('+i+')" style="background:none;border:none;cursor:pointer;color:var(--text2);font-size:16px;padding:0"><i class="ti ti-x"></i></button></div>';}
+    document.getElementById('wFoodLog').innerHTML=fl;
+  }else{document.getElementById('wFoodLog').innerHTML='<div style="font-size:13px;color:var(--text2)">Nothing logged yet.</div>';}
+  var w=wS.water[today]||0;
+  var wd='';for(var i=0;i<8;i++)wd+='<div class="wd'+(i<w?' full':'')+'" onclick="wTogWater('+i+')"><i class="ti ti-droplet" style="font-size:14px;color:'+(i<w?'#185FA5':'var(--border2)')+'"></i></div>';
+  document.getElementById('wWater').innerHTML=wd;
+  document.getElementById('wWaterN').textContent=w;
+  initCatBtns('w');renderFoodDB('w');
+}
+function wRemFood(i){var today=td();wS.food[today].splice(i,1);svW();wRenderNut();}
+function wTogWater(i){var today=td();var w=wS.water[today]||0;wS.water[today]=w>i?i:i+1;svW();wRenderNut();}
+
+// ─── HUSBAND NUTRITION RENDER ───
+function hRenderNut(){
+  var today=td(),foods=hS.food[today]||[];
+  var tc=0,tp=0,tcb=0,tf=0;
+  for(var i=0;i<foods.length;i++){tc+=foods[i].cal;tp+=foods[i].prot||0;tcb+=foods[i].carb||0;tf+=foods[i].fat||0;}
+  var goal=hS.calGoal||2200,burn=hS.logs.filter(function(l){return l.date===today;}).length?350:0;
+  document.getElementById('hCalEat').textContent=Math.round(tc);
+  document.getElementById('hCalGoal').textContent=Math.round(goal);
+  document.getElementById('hCalBurn').textContent=Math.round(burn);
+  document.getElementById('hCalRem').textContent=Math.max(0,Math.round(goal-tc+burn));
+  var pg=hS.protGoal||150;
+  document.getElementById('hVProt').textContent=Math.round(tp)+'g';document.getElementById('hPProt').style.width=Math.min(100,(tp/pg)*100)+'%';
+  document.getElementById('hVCarb').textContent=Math.round(tcb)+'g';document.getElementById('hPCarb').style.width=Math.min(100,(tcb/300)*100)+'%';
+  document.getElementById('hVFat').textContent=Math.round(tf)+'g';document.getElementById('hPFat').style.width=Math.min(100,(tf/75)*100)+'%';
+  var circ=2*Math.PI*55;
+  document.getElementById('hCalArc').setAttribute('stroke-dashoffset',(circ*(1-Math.min(1,tc/goal))).toFixed(1));
+  document.getElementById('hCalArc').style.stroke=tc>goal?'#E24B4A':'#378ADD';
+  if(foods.length){
+    var fl='';
+    for(var i=0;i<foods.length;i++){fl+='<div class="fi"><div><div style="font-weight:500">'+foods[i].name+'</div><div style="font-size:11px;color:var(--text2)">'+Math.round(foods[i].cal)+' kcal P:'+Math.round(foods[i].prot||0)+'g C:'+Math.round(foods[i].carb||0)+'g</div></div><button onclick="hRemFood('+i+')" style="background:none;border:none;cursor:pointer;color:var(--text2);font-size:16px;padding:0"><i class="ti ti-x"></i></button></div>';}
+    document.getElementById('hFoodLog').innerHTML=fl;
+  }else{document.getElementById('hFoodLog').innerHTML='<div style="font-size:13px;color:var(--text2)">Nothing logged yet.</div>';}
+  var w=hS.water[today]||0;
+  var wd='';for(var i=0;i<8;i++)wd+='<div class="wd'+(i<w?' full':'')+'" onclick="hTogWater('+i+')"><i class="ti ti-droplet" style="font-size:14px;color:'+(i<w?'#185FA5':'var(--border2)')+'"></i></div>';
+  document.getElementById('hWater').innerHTML=wd;
+  document.getElementById('hWaterN').textContent=w;
+  initCatBtns('h');renderFoodDB('h');
+}
+function hRemFood(i){var today=td();hS.food[today].splice(i,1);svH();hRenderNut();}
+function hTogWater(i){var today=td();var w=hS.water[today]||0;hS.water[today]=w>i?i:i+1;svH();hRenderNut();}
+
+// ─── BODY ───
+function wLogBody(){
+  var w=parseFloat(document.getElementById('wBWt').value)||null;
+  if(!w&&!parseFloat(document.getElementById('wBWa').value))return;
+  wS.bodyLogs.unshift({date:td(),w:w,wa:parseFloat(document.getElementById('wBWa').value)||null,hi:parseFloat(document.getElementById('wBHi').value)||null,ch:parseFloat(document.getElementById('wBCh').value)||null,th:parseFloat(document.getElementById('wBTh').value)||null,ar:parseFloat(document.getElementById('wBAr').value)||null});
+  svW();wCheckBadges();wRenderBody();
+  ['wBWt','wBWa','wBHi','wBCh','wBTh','wBAr'].forEach(function(id){document.getElementById(id).value='';});
+}
+function wRenderBody(){
+  var logs=wS.bodyLogs;
+  document.getElementById('wBodyLog').innerHTML=logs.length?logs.slice(0,8).map(function(l){return '<div class="row"><span style="font-weight:500">'+new Date(l.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</span><span style="font-size:12px;color:var(--text2)">'+(l.w?l.w+'kg ':'')+( l.wa?'W:'+l.wa+' ':'')+( l.hi?'H:'+l.hi+' ':'')+'</span></div>';}).join(''):'<div style="font-size:13px;color:var(--text2)">None yet.</div>';
+  var wd=logs.filter(function(l){return l.w;}).slice(0,14).reverse();
+  var ex=Chart.getChart('wWtChart');if(ex)ex.destroy();
+  if(wd.length>0){
+    var gl=wS.goalWt||null;
+    var ds=[{label:'Weight',data:wd.map(function(l){return l.w;}),borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.1)',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:'#1D9E75'}];
+    if(gl)ds.push({label:'Goal',data:wd.map(function(){return gl;}),borderColor:'#E24B4A',borderDash:[5,5],pointRadius:0,fill:false,borderWidth:1.5});
+    new Chart(document.getElementById('wWtChart'),{type:'line',data:{labels:wd.map(function(l){return new Date(l.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'});}),datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:!!gl,labels:{font:{size:10},boxWidth:20}}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+  }
+}
+function wCalcBMI(){var h=parseFloat(document.getElementById('wBMIh').value),w=parseFloat(document.getElementById('wBMIw').value);if(!h||!w){document.getElementById('wBMIres').textContent='Enter height and weight';return;}var bmi=w/((h/100)*(h/100));var cat=bmi<18.5?'Underweight':bmi<25?'Healthy weight':bmi<30?'Overweight':'Obese';var col=bmi<18.5?'#185FA5':bmi<25?'#0F6E56':bmi<30?'#854F0B':'#A32D2D';document.getElementById('wBMIres').innerHTML='BMI: <span style="font-weight:500;color:'+col+'">'+bmi.toFixed(1)+' - '+cat+'</span>';}
+function hLogBody(){
+  var w=parseFloat(document.getElementById('hBWt').value)||null;
+  if(!w&&!parseFloat(document.getElementById('hBWa').value))return;
+  hS.bodyLogs.unshift({date:td(),w:w,wa:parseFloat(document.getElementById('hBWa').value)||null,ch:parseFloat(document.getElementById('hBCh').value)||null,hi:parseFloat(document.getElementById('hBHi').value)||null,th:parseFloat(document.getElementById('hBTh').value)||null,ar:parseFloat(document.getElementById('hBAr').value)||null});
+  svH();hCheckBadges();hRenderBody();
+  ['hBWt','hBWa','hBCh','hBHi','hBTh','hBAr'].forEach(function(id){document.getElementById(id).value='';});
+}
+function hRenderBody(){
+  var logs=hS.bodyLogs;
+  document.getElementById('hBodyLog').innerHTML=logs.length?logs.slice(0,8).map(function(l){return '<div class="row"><span style="font-weight:500">'+new Date(l.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</span><span style="font-size:12px;color:var(--text2)">'+(l.w?l.w+'kg ':'')+( l.wa?'W:'+l.wa+' ':'')+( l.ch?'C:'+l.ch+' ':'')+'</span></div>';}).join(''):'<div style="font-size:13px;color:var(--text2)">None yet.</div>';
+  var wd=logs.filter(function(l){return l.w;}).slice(0,14).reverse();
+  var ex=Chart.getChart('hWtChart');if(ex)ex.destroy();
+  if(wd.length>0){
+    var gl=hS.goalWt||null;
+    var ds=[{label:'Weight',data:wd.map(function(l){return l.w;}),borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,0.1)',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:'#378ADD'}];
+    if(gl)ds.push({label:'Goal',data:wd.map(function(){return gl;}),borderColor:'#E24B4A',borderDash:[5,5],pointRadius:0,fill:false,borderWidth:1.5});
+    new Chart(document.getElementById('hWtChart'),{type:'line',data:{labels:wd.map(function(l){return new Date(l.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'});}),datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:!!gl,labels:{font:{size:10},boxWidth:20}}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});
+  }
+}
+function hCalcBMI(){var h=parseFloat(document.getElementById('hBMIh').value),w=parseFloat(document.getElementById('hBMIw').value);if(!h||!w){document.getElementById('hBMIres').textContent='Enter height and weight';return;}var bmi=w/((h/100)*(h/100));var cat=bmi<18.5?'Underweight':bmi<25?'Healthy weight':bmi<30?'Overweight':'Obese';var col=bmi<18.5?'#185FA5':bmi<25?'#0F6E56':bmi<30?'#854F0B':'#A32D2D';document.getElementById('hBMIres').innerHTML='BMI: <span style="font-weight:500;color:'+col+'">'+bmi.toFixed(1)+' - '+cat+'</span>';}
+
+// ─── PROGRESS ───
+function mkCalGrid(elId,comp,now){
+  var y=now.getFullYear(),m=now.getMonth(),dim=new Date(y,m+1,0).getDate(),sdow=(new Date(y,m,1).getDay()+6)%7;
+  var h='';
+  var days=['M','T','W','T','F','S','S'];
+  for(var d=0;d<7;d++)h+='<div style="text-align:center;font-size:10px;color:var(--text2);padding:2px 0">'+days[d]+'</div>';
+  for(var i=0;i<sdow;i++)h+='<div></div>';
+  for(var d=1;d<=dim;d++){var ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');var it=d===now.getDate()&&m===now.getMonth();var dn=comp.indexOf(ds)>-1;var dow=new Date(y,m,d).getDay();var iw=[1,2,3,4].indexOf(dow)>-1;h+='<div class="wkc'+(dn?' dn':(iw?' wd2':' rs'))+(it?' td2':'')+'">'+d+'</div>';}
+  document.getElementById(elId).innerHTML=h;
+}
+function mkRpeChart(elId,logs,color){
+  var rd=logs.filter(function(l){return l.rpe;}).slice(0,10).reverse();
+  var ex=Chart.getChart(elId);if(ex)ex.destroy();
+  if(rd.length>1){new Chart(document.getElementById(elId),{type:'line',data:{labels:rd.map(function(l){return new Date(l.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'});}),datasets:[{data:rd.map(function(l){return l.rpe;}),borderColor:color,backgroundColor:color+'22',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:color}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:1,max:10,ticks:{stepSize:2,font:{size:10}}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});}
+}
+function mkStreak(comp){var str=0,ch=new Date();ch.setHours(0,0,0,0);for(var i=0;i<365;i++){var ds=ch.toISOString().slice(0,10);if(comp.indexOf(ds)>-1){str++;ch.setDate(ch.getDate()-1);}else{if(i===0){ch.setDate(ch.getDate()-1);continue;}break;}}return str;}
+function mkWeekCount(comp){var now=new Date(),ws=new Date(now);ws.setDate(now.getDate()-((now.getDay()+6)%7));ws.setHours(0,0,0,0);return comp.filter(function(d){return new Date(d)>=ws;}).length;}
+function mkWkSum(logs,mins){
+  var now=new Date(),ws2=new Date(now);ws2.setDate(now.getDate()-((now.getDay()+6)%7));ws2.setHours(0,0,0,0);
+  var wl=logs.filter(function(l){return new Date(l.date)>=ws2;});
+  var rpes=wl.filter(function(l){return l.rpe;});
+  var avgR=rpes.length?Math.round(rpes.reduce(function(a,l){return a+l.rpe;},0)/rpes.length):null;
+  var moods=wl.filter(function(l){return l.mood;}).map(function(l){return l.mood;});
+  var topM=moods.length?moods.sort(function(a,b){return moods.filter(function(v){return v===b;}).length-moods.filter(function(v){return v===a;}).length;})[0]:null;
+  return '<div class="row"><span style="color:var(--text2)">Sessions this week</span><span style="font-weight:500">'+wl.length+'</span></div><div class="row"><span style="color:var(--text2)">Average effort RPE</span><span style="font-weight:500">'+(avgR||'-')+'</span></div><div class="row"><span style="color:var(--text2)">Most common mood</span><span style="font-weight:500">'+(topM||'-')+'</span></div><div class="row"><span style="color:var(--text2)">Total minutes</span><span style="font-weight:500">'+wl.length*mins+' min</span></div>';
+}
+function wLogStr(){var ex=document.getElementById('wStrEx').value,w=parseFloat(document.getElementById('wStrWt').value);if(!ex||!w)return;wS.strength.push({date:td(),ex:ex,w:w});svW();wRenderProg();document.getElementById('wStrWt').value='';}
+function wRenderProg(){
+  var now=new Date();
+  document.getElementById('wStW').textContent=wS.logs.length;document.getElementById('wStWk').textContent=mkWeekCount(wS.completedDays);document.getElementById('wStSt').textContent=mkStreak(wS.completedDays);document.getElementById('wStMin').textContent=wS.logs.length*45;
+  mkCalGrid('wCalGrid',wS.completedDays,now);
+  mkRpeChart('wRpeChart',wS.logs,'#7F77DD');
+  var strEx=document.getElementById('wStrEx').value,sd=wS.strength.filter(function(s){return s.ex===strEx;}).slice(-12);
+  var sc2=Chart.getChart('wStrChart');if(sc2)sc2.destroy();
+  if(sd.length>1){new Chart(document.getElementById('wStrChart'),{type:'line',data:{labels:sd.map(function(s){return new Date(s.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'});}),datasets:[{data:sd.map(function(s){return s.w;}),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',fill:true,tension:0.3,pointRadius:4,pointBackgroundColor:'#BA7517'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:10}},grid:{display:false}}}}});}
+  document.getElementById('wWeekSum').innerHTML=mkWkSum(wS.logs,45);
+  document.getElementById('wWkLog').innerHTML=wS.logs.length?wS.logs.slice(0,12).map(function(l){return '<div class="row"><span style="font-weight:500">'+new Date(l.date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+'</span><span style="font-size:12px;color:var(--text2)">'+(l.mood||'')+' '+(l.rpe?'RPE '+l.rpe:'')+'</span><span style="color:#1D9E75;font-size:12px">done</span></div>';}).join(''):'<div style="font-size:13px;color:var(--text2)">No workouts yet.</div>';
+}
+function hRenderProg(){
+  var now=new Date();
+  document.getElementById('hStW').textContent=hS.logs.length;document.getElementById('hStWk').textContent=mkWeekCount(hS.completedDays);document.getElementById('hStSt').textContent=mkStreak(hS.completedDays);document.getElementById('hStMin').textContent=hS.logs.length*30;
+  mkCalGrid('hCalGrid',hS.completedDays,now);
+  mkRpeChart('hRpeChart',hS.logs,'#378ADD');
+  document.getElementById('hWeekSum').innerHTML=mkWkSum(hS.logs,30);
+  document.getElementById('hWkLog').innerHTML=hS.logs.length?hS.logs.slice(0,12).map(function(l){return '<div class="row"><span style="font-weight:500">'+new Date(l.date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+'</span><span style="font-size:12px;color:var(--text2)">'+(l.mood||'')+' '+(l.rpe?'RPE '+l.rpe:'')+'</span><span style="color:#378ADD;font-size:12px">done</span></div>';}).join(''):'<div style="font-size:13px;color:var(--text2)">No workouts yet.</div>';
+}
+function wClearAll(){if(confirm('Reset all your data?')){wS.logs=[];wS.bodyLogs=[];wS.food={};wS.water={};wS.milestones=[];wS.strength=[];wS.completedDays=[];wS.earnedBadges=[];svW();wRenderProg();}}
+function hClearAll(){if(confirm('Reset all your data?')){hS.logs=[];hS.bodyLogs=[];hS.food={};hS.water={};hS.strength=[];hS.completedDays=[];hS.earnedBadges=[];svH();hRenderProg();}}
+
+// ─── BADGES ───
+function wCheckBadges(){BADGES.forEach(function(b){if(wS.earnedBadges.indexOf(b.id)<0&&b.check(wS))wS.earnedBadges.push(b.id);});svW();}
+function hCheckBadges(){BADGES.forEach(function(b){if(hS.earnedBadges.indexOf(b.id)<0&&b.check(hS))hS.earnedBadges.push(b.id);});svH();}
+function renderBadges(who){
+  var s=who==='wife'?wS:hS;
+  var id=who==='wife'?'wBadges':'hBadges';
+  if(who==='wife')wCheckBadges();else hCheckBadges();
+  document.getElementById(id).innerHTML=BADGES.map(function(b){var earned=s.earnedBadges.indexOf(b.id)>-1;return '<div class="bc" style="background:'+(earned?b.color:'var(--bg2)')+';opacity:'+(earned?1:0.4)+'"><i class="ti '+b.icon+'" style="font-size:22px;color:'+(earned?b.tc:'var(--text2)')+'"></i><div class="bn" style="color:'+(earned?b.tc:'var(--text2)')+'">'+b.name+'</div><div class="bs">'+b.desc+'</div></div>';}).join('');
+}
+
+// ─── BABY ───
+function wAddMs(){var t=document.getElementById('wMsText').value.trim(),a=document.getElementById('wMsAge').value;if(!t)return;wS.milestones.unshift({date:td(),text:t,age:a});svW();wRenderBaby();document.getElementById('wMsText').value='';document.getElementById('wMsAge').value='';}
+function wRenderBaby(){
+  document.getElementById('wMsList').innerHTML=wS.milestones.length?wS.milestones.map(function(m){return '<div class="mi"><div style="width:10px;height:10px;border-radius:50%;background:#D4537E;flex-shrink:0;margin-top:4px"></div><div><div style="font-size:13px;font-weight:500">'+m.text+'</div><div style="font-size:11px;color:var(--text2);margin-top:2px">'+(m.age?'Week '+m.age+' ': '')+new Date(m.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</div></div></div>';}).join(''):'<div style="font-size:13px;color:var(--text2)">None yet.</div>';
+  var guide=[{w:'4-6 weeks',m:'Social smile, tracks faces, lifts head briefly'},{w:'6-8 weeks',m:'Coos, responds to voices, holds eye contact'},{w:'8-12 weeks',m:'Laughs, bats at objects, mini push-up on tummy'},{w:'3-4 months',m:'Rolls tummy to back, reaches for toys'},{w:'4-6 months',m:'Sits with support, babbles, passes objects'},{w:'6-9 months',m:'Sits alone, begins to crawl, waves bye-bye'}];
+  document.getElementById('wBabyGuide').innerHTML=guide.map(function(g){return '<div class="row"><span style="font-weight:500;color:#993556;white-space:nowrap">'+g.w+'</span><span style="font-size:12px;color:var(--text2);padding-left:12px">'+g.m+'</span></div>';}).join('');
+}
+
+// ─── REST DAYS ───
+function renderRestLists(){
+  var tip=function(t,icon,c){return '<div class="ti-row"><i class="ti '+icon+'" style="font-size:18px;color:'+c+';flex-shrink:0;margin-top:2px"></i><div><div style="font-size:13px;font-weight:500;margin-bottom:2px">'+t.t+'</div><div style="font-size:12px;color:var(--text2);line-height:1.5">'+t.b+'</div></div></div>';};
+  var wrl='',wpl='',hrl='';
+  for(var i=0;i<REST_TIPS.length;i++){wrl+=tip(REST_TIPS[i],REST_TIPS[i].icon,'var(--teal)');hrl+=tip(REST_TIPS[i],REST_TIPS[i].icon,'var(--blue)');}
+  for(var i=0;i<PF_TIPS.length;i++)wpl+=tip(PF_TIPS[i],PF_TIPS[i].icon,'var(--pink)');
+  document.getElementById('wRestList').innerHTML=wrl;
+  document.getElementById('wPFList').innerHTML=wpl;
+  document.getElementById('hRestList').innerHTML=hrl;
+}
+
+// ─── SETUP ───
+function wSaveSetup(){wS.name=document.getElementById('wSetName').value.trim()||wS.name;wS.calGoal=parseFloat(document.getElementById('wSetCal').value)||wS.calGoal;wS.protGoal=parseFloat(document.getElementById('wSetProt').value)||wS.protGoal;wS.startWt=parseFloat(document.getElementById('wSetSWt').value)||wS.startWt;wS.goalWt=parseFloat(document.getElementById('wSetGWt').value)||wS.goalWt;wS.music=document.getElementById('wSetMusic').value.trim()||wS.music;svW();switchProfile('wife');}
+function hSaveSetup(){hS.name=document.getElementById('hSetName').value.trim()||hS.name;hS.calGoal=parseFloat(document.getElementById('hSetCal').value)||hS.calGoal;hS.protGoal=parseFloat(document.getElementById('hSetProt').value)||hS.protGoal;hS.startWt=parseFloat(document.getElementById('hSetSWt').value)||hS.startWt;hS.goalWt=parseFloat(document.getElementById('hSetGWt').value)||hS.goalWt;hS.music=document.getElementById('hSetMusic').value.trim()||hS.music;svH();switchProfile('husband');}
+
+// ─── INIT ───
+if(wS.name){document.getElementById('profWName').textContent=wS.name;document.getElementById('wSetName').value=wS.name;}
+if(hS.name){document.getElementById('profHName').textContent=hS.name;document.getElementById('hSetName').value=hS.name;}
+renderRestLists();
+switchProfile('wife');
+wRenderExList();
+wUpdDisp();
+hUpdDisp();
+</script>
+</body>
+</html>
